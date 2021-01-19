@@ -3,7 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+// import Counter from "./component/Counter";
 
+//  시작 위치를 Counter로 설정
+// ReactDOM.render(
+//   <Counter />,
+//   document.getElementById('root')
+// );
 ReactDOM.render(
   <React.StrictMode>
     <App />
