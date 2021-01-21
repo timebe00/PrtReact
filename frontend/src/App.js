@@ -5,7 +5,8 @@
 //  useMemo : 특정 값 결과 값 재사용
 //  useCallback : 새로 만들지 않고 재사용
 
-import React, { useRef, useState, useMemo, useCallback, useReducer } from 'react'
+// import React, { useRef, useState, useMemo, useCallback, useReducer } from 'react'
+import React, { useRef, useReducer, useMemo, useCallback } from 'react';
 // import Hellow from './component/Hellow'
 // import './App.css'
 import CreateUSer from './component/CreateUsers';
@@ -16,17 +17,18 @@ import UserList from './component/UserList'
 
 //  users 배열을 받아온다.
 function countActiveUsers(users) {
-  console.log('활성 사용자 수를 세는 중');
+  // console.log('활성 사용자 수를 세는 중...');
   //  users에서 active가 true인 수를 세어 리턴한다.
   return users.filter(user => user.active).length;
 }
 
 const initialState = {
+  //  내용 초기화
   inputs: {
     username: '',
     email: ''
   },
-  //  users 함수 선언
+  //  users 초기 내용 선언
   users: [
     {
       id: 1,
@@ -35,37 +37,43 @@ const initialState = {
       active: true
     },
     {
-        id: 2,
-        username: 'tester',
-        email: 'tester@example.com',
-        active: false
+      id: 2,
+      username: 'tester',
+      email: 'tester@example.com',
+      active: false
     },
     {
-        id: 3,
-        username: 'liz',
-        email: 'liz@example.com',
-        active: false
+      id: 3,
+      username: 'liz',
+      email: 'liz@example.com',
+      active: false
     }
   ]
 };
 
 //  변수/함수 값을 state를 넣고 함께 온 변수/함수 값을 action에 넣는다.
 function reducer(state, action) {
-  switch(action.type) {
-    case 'CHANGE_INPUT' :
+  // console.log("state")
+  // console.log(state)
+  // console.log("action")
+  // console.log(action)
+  switch (action.type) {
+    case 'CHANGE_INPUT':
       return {
         //  state에 넣어있는 값을 전부 다 펼친다.
         ...state,
+        //  내용 넣기
         inputs: {
           //  state.inputs을 전부 다 펼친다.
           ...state.inputs,
           [action.name]: action.value
         }
       };
-    case 'CREATE_USER' :
+    case 'CREATE_USER':
+      // console.log("echo")
       return {
         inputs: initialState.inputs,
-        usersd: state.users.concat(action.user)
+        users: state.users.concat(action.user)
       };
 
     case 'TOGGLE_USER' :
@@ -103,20 +111,20 @@ function App() {
   //   username: '',
   //   email: ''
   // })
-
+  //  
   const [state, dispatch] = useReducer(reducer, initialState);
-  const nextId = userRef(4);
-
+  const nextId = useRef(4);
   const { users } = state;
+
   const { username, email } = state.inputs;
 
   //  inputs에 있는 username, email을 username, email으로 사용하기
   // const{ username, email } = inputs;
 
   const onChange = useCallback(e => {
-    //  name과 같은 값에 내용 가져오기
-    //  ex) name = "email" 시 email이라는 키로 값 집어 넣기
-    const {name, value} = e.target;
+    console.log(e.target)
+    //  e.target에 있는 name과 value를 받아서 name과 value로 사용하도록 한다.
+    const { name, value } = e.target;
     //  setInputs에 그 내용 집어넣기
     // setInputs({
     //   ...inputs,
@@ -199,7 +207,7 @@ function App() {
   //   )
   // },[users])
 
-  const onTiggle = useCallback(id => {
+  const onToggle = useCallback(id => {
     dispatch({
       type: 'TOGGLE_USER',
       id

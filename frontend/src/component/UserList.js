@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 function User({user, onRemove, onToggle}) {
     //  이벤트 발생 시 나타남
     useEffect(() => {
-        console.log('컴포넌트가 화면에 나타남');
+        // console.log('컴포넌트가 화면에 나타남');
         // console.log(user);
         // return () => {
         //     console.log('컴포넌트가 화며에서 사라짐')
